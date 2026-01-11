@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+env.bak
+venv.bak
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IDE
+.vscode/
+.idea/
+
+# Project Data & Logs
+# data/raw/*
+# !data/raw/.gitkeep
+minio/
+dagster_home/*
+!dagster_home/workspace.yaml
+logs/
+spark-warehouse/
+metastore_db/
+derby.log
+
+
+# Mac
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite
+
