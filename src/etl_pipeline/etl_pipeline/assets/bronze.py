@@ -24,7 +24,7 @@ def ingest_table(context, spark: SparkSession, table_name: str, config: BronzeCo
     context.log.info(f"Starting ingestion for {table_name} in {config.load_mode} mode")
     
     # Credentials should ideally be in secrets/env, using defaults for now matching project
-    jdbc_url = "jdbc:mysql://mysql:3306/olist?useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL"
+    jdbc_url = "jdbc:mysql://mysql:3306/olist?useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=CONVERT_TO_NULL"
 
     db_properties = {
         "user": "root", 

@@ -73,6 +73,7 @@ class SparkSessionResource(ConfigurableResource):
                 .config("spark.sql.shuffle.partitions", "3")
                 .config("spark.pyspark.python", "python3")
                 .config("spark.pyspark.driver.python", "python3")
+                .config("spark.executorEnv.PYTHONPATH", "/opt/dagster/app/etl_pipeline")
                 .enableHiveSupport()
                 .getOrCreate()
             )

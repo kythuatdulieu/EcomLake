@@ -384,13 +384,9 @@ def dim_date(context, silver_date: DataFrame):
     end_date = spark_df.select(max("order_purchase_timestamp")).first()[0]
 
     with get_spark_session(None, str(context.run.run_id).split("-")[0]) as spark:
-        date_range = spark.sparkContext.parallelize(
-            [
-                (start_date + timedelta(days=x))
-                for x in range((end_date - start_date).days + 1)
-            ]
+        date_df = spark.sql(
+            f"SELECT explode(sequence(to_date('{start_date}'), to_date('{end_date}'), interval 1 day)) as date"
         )
-        date_df = date_range.map(lambda x: (x,)).toDF(["date"])
 
     date_df = (
         date_df.withColumn(

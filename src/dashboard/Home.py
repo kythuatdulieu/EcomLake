@@ -1,24 +1,29 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="EcomLake DataLakeHouse",
-    page_icon="🏠",
-    layout="wide"
+    page_title="EcomLake Dashboard",
+    page_icon="🌊",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
-st.title("Welcome to EcomLake DataLakeHouse")
+st.write("# 🌊 EcomLake Dashboard")
 
-st.markdown("""
-This application demonstrates a comprehensive Data Lakehouse solution using:
-- **Spark** for data processing
-- **MinIO** for object storage
-- **MLflow** for model tracking
-- **Streamlit** for the user interface
-- **LangChain** and **OpenAI/Groq** for chatbot capabilities
+st.markdown(
+    """
+    ## Welcome to the EcomLake Data Platform!
 
-### Navigation
-Select a page from the sidebar to explore:
-- **Show comments**: Filter and view product reviews.
-- **Predict comment**: Sentiment analysis on reviews.
-- **Chatbot**: Interact with the database using natural language.
-""")
+    This dashboard provides insights into the E-commerce Data Lakehouse built with **Spark**, **Delta Lake**, and **Dagster**.
+
+    ### 👈 Select a page from the sidebar to get started
+
+    **Available Modules:**
+    - **📊 Executive Overview**: High-level KPIs and business metrics.
+    - **🗺️ Geospatial Insights**: interactive maps and location-based analysis.
+    
+    ---
+    *Built with Streamlit & PySpark*
+    """
+)
+
+st.sidebar.success("Select a demo above.")

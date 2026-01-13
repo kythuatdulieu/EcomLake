@@ -18,7 +18,7 @@ Crontab Syntax
 
 daily_etl_schedule = ScheduleDefinition(
     job=etl_pipeline_job,
-    cron_schedule="48 19 * * *", 
+    cron_schedule="30 00 * * *", 
     execution_timezone="Asia/Ho_Chi_Minh",
 )
 

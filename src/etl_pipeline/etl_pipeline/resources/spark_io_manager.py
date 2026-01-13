@@ -26,7 +26,8 @@ def get_spark_session(config=None, run_id="Spark IO Manager"):
                 "/opt/spark/jars/delta-storage-2.3.0.jar,"
                 "/opt/spark/jars/aws-java-sdk-bundle-1.11.1026.jar,"
                 "/opt/spark/jars/s3-2.18.41.jar,"
-                "/opt/spark/jars/mysql-connector-java-8.0.19.jar",
+                "/opt/spark/jars/mysql-connector-java-8.0.19.jar,"
+                "/opt/spark/jars/mlflow-spark-2.6.0.jar"
             )
             .config(
                 "spark.sql.catalog.spark_catalog",
@@ -44,10 +45,22 @@ def get_spark_session(config=None, run_id="Spark IO Manager"):
             .config("hive.metastore.uris", "thrift://hive-metastore:9083")
             .config("spark.sql.catalogImplementation", "hive")
             .config("spark.executor.cores", "1")
-            .config("spark.cores.max", "1")
+            .config("spark.cores.max", "3")                
+            .config("spark.default.parallelism", "3")
+            .config("spark.sql.shuffle.partitions", "3")
             .config("spark.driver.memory", "512m")
             .config("spark.executor.memory", "512m")
             .config("spark.pyspark.python", "/usr/bin/python3")
+            .config(
+                "spark.driver.extraClassPath",
+                "/opt/spark/jars/delta-core_2.12-2.3.0.jar:"
+                "/opt/spark/jars/hadoop-aws-3.3.2.jar:"
+                "/opt/spark/jars/delta-storage-2.3.0.jar:"
+                "/opt/spark/jars/aws-java-sdk-bundle-1.11.1026.jar:"
+                "/opt/spark/jars/s3-2.18.41.jar:"
+                "/opt/spark/jars/mysql-connector-java-8.0.19.jar:"
+                "/opt/spark/jars/mlflow-spark-2.6.0.jar"
+            )
             .enableHiveSupport()
             .getOrCreate()
         )

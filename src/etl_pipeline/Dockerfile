@@ -21,12 +21,14 @@ RUN curl -O https://repo1.maven.org/maven2/io/delta/delta-core_2.12/2.3.0/delta-
   && curl -O https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.2/hadoop-aws-3.3.2.jar \
   && curl -O https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.1026/aws-java-sdk-bundle-1.11.1026.jar \
   && curl -O https://repo1.maven.org/maven2/software/amazon/awssdk/s3/2.18.41/s3-2.18.41.jar \
+  && curl -o mlflow-spark-2.6.0.jar https://repo1.maven.org/maven2/org/mlflow/mlflow-spark/2.6.0/mlflow-spark-2.6.0.jar \
   && mv delta-core_2.12-2.3.0.jar /opt/spark/jars \
   && mv delta-storage-2.3.0.jar /opt/spark/jars \
   && mv mysql-connector-java-8.0.19.jar /opt/spark/jars \
   && mv hadoop-aws-3.3.2.jar /opt/spark/jars \
   && mv aws-java-sdk-bundle-1.11.1026.jar /opt/spark/jars \
-  && mv s3-2.18.41.jar /opt/spark/jars
+  && mv s3-2.18.41.jar /opt/spark/jars \
+  && mv mlflow-spark-2.6.0.jar /opt/spark/jars
 
 # Add repository code
 WORKDIR /opt/dagster/app/etl_pipeline  

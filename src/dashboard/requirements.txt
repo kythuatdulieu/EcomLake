@@ -1,0 +1,10 @@
+streamlit
+pandas
+mysql-connector-python
+python-dotenv
+nltk
+mlflow
+pyspark==3.3.2
+delta-spark==2.3.0
+matplotlib
+pydeck

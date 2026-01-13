@@ -18,6 +18,61 @@ MODEL_VERSION = 1
 VECTOR_NAME = "transform"
 VECTOR_VERSION = 1
 
+import os
+import mysql.connector
+from mysql.connector import MySQLConnection
+
+def get_db_config():
+    return {
+        "host": os.getenv("MYSQL_HOST", "mysql"),
+        "user": os.getenv("MYSQL_USER", "root"),
+        "password": os.getenv("MYSQL_PASSWORD", "admin"),
+        "database": os.getenv("MYSQL_DATABASE", "olist"),
+        "port": int(os.getenv("MYSQL_PORT", "3306"))
+    }
+
+def get_db_connection() -> MySQLConnection:
+    """Creates and returns a MySQL database connection."""
+    config = get_db_config()
+    return mysql.connector.connect(**config)
+
+def get_db_uri() -> str:
+    """Returns the SQLAlchemy database URI."""
+    config = get_db_config()
+    return f"mysql+mysqlconnector://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}"
+
+from pyspark.sql import SparkSession
+from delta import configure_spark_with_delta_pip
+
+@st.cache_resource
+def get_spark_session():
+    """Creates and returns a SparkSession with Delta, Hive, and MinIO support."""
+    try:
+        builder = (
+            SparkSession.builder.appName("StreamlitDashboard")
+            .master("spark://spark-master:7077")
+            .config("spark.jars", 
+                    "/opt/spark/jars/delta-core_2.12-2.3.0.jar,"
+                    "/opt/spark/jars/hadoop-aws-3.3.2.jar,"
+                    "/opt/spark/jars/delta-storage-2.3.0.jar,"
+                    "/opt/spark/jars/aws-java-sdk-bundle-1.11.1026.jar,"
+                    "/opt/spark/jars/s3-2.18.41.jar,"
+                    "/opt/spark/jars/mysql-connector-java-8.0.19.jar")
+            .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+            .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+            .config("spark.hadoop.fs.s3a.endpoint", "http://minio:9000")
+            .config("spark.hadoop.fs.s3a.access.key", "minio")
+            .config("spark.hadoop.fs.s3a.secret.key", "minio123")
+            .config("spark.hadoop.fs.s3a.path.style.access", "true")
+            .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+            .config("hive.metastore.uris", "thrift://hive-metastore:9083")
+            .config("spark.sql.catalogImplementation", "hive")
+        )
+        return configure_spark_with_delta_pip(builder).getOrCreate()
+    except Exception as e:
+        st.error(f"Failed to create Spark Session: {e}")
+        return None
+
 # Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
 
