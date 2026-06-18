@@ -1,6 +1,7 @@
 # XÂY DỰNG HỆ THỐNG DATA LAKEHOUSE CHO BÀI TOÁN THƯƠNG MẠI ĐIỆN TỬ
 **(EcomLake Project)**
 
+> 📖 **Đọc bài viết phân tích kiến trúc chi tiết bằng Tiếng Việt tại:** [Sổ Tay Kỹ Thuật Dữ Liệu](https://kythuatdulieu.github.io/projects/e2e/ecomlake/)
 
 **Credit:** Thank for Thanh Hùng
 
